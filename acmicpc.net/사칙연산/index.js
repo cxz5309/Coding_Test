@@ -1,12 +1,9 @@
 const fs = require('fs');
 const stdin = (process.platform === 'linux'
     ? fs.readFileSync('/dev/stdin').toString()
-    : `5 5`
+    : `7 3`
 ).split('\n');
  
-
-//case '1 1'
-
 const input = (() => {
     let line = 0;
     return () => stdin[line++];
@@ -15,30 +12,20 @@ const input = (() => {
 const lineSplit = input();
 const wordSplit = lineSplit.split(' ').map(Number);
 
-// /*case 't'
-// '1 1'
-// ...*/
-
-// var testCase;
-// var lineSplit = [];
-
-// testCase = stdin[0];
-// stdin.shift();
-
-// for(let i=0; i<testCase; i++){
-//     lineSplit.push(stdin[i]);
-// }
-
-
 //--------------------------------------------------------
 
 let a = wordSplit[0];
 let b = wordSplit[1];
 
-function solution(input1, input2){
-   let answer = [];
-   return answer;
+function solution(a, b){
+    let answer = [];
+    answer.push(a+b);
+    answer.push(a-b);
+    answer.push(a*b);
+    answer.push(parseInt(a/b));
+    answer.push(a%b);
+    return answer;
 }
 
 
-console.log(solution(wordSplit[0], wordSplit[1]));
+console.log(solution(a, b).join("\n"));
