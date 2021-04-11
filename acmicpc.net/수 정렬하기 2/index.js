@@ -21,9 +21,8 @@ const stdin = (process.platform === 'linux' ?
 var testCase;
 var lineSplit = [];
 
-testCase = stdin[0];
+testCase = Number(stdin[0]);
 stdin.shift();
-
 for (var i = 0; i < testCase; i++) {
     lineSplit.push(Number(stdin[i]));
 }
@@ -31,14 +30,23 @@ for (var i = 0; i < testCase; i++) {
 //--------------------------------------------------------
 function merge(left, right) {
     let answer = [];
-    while (left.length != 0 && right.length != 0) {
-        left[0] <= right[0] ? answer.push(left.shift()) : answer.push(right.shift());
+    let l = 0;
+    let r = 0;
+    while (left.length > l && right.length > r) {
+        if(left[l] <= right[r]){
+            answer.push(left[l]);
+            l++;
+        }else{
+            answer.push(right[r]);
+            r++;
+        }
     }
-    if(left.length == 0){
-        answer.push(...right);
+
+    if(left.length == l){
+        answer = answer.concat(right.slice(r));
     }
-    if(right.length == 0){
-        answer.push(...left);
+    if(right.length == r){
+        answer = answer.concat(left.slice(l));
     }
     return answer;
 }
@@ -65,4 +73,4 @@ function solution(input) {
 }
 
 
-console.log(solution(lineSplit));
+console.log(solution(lineSplit).join("\n"));
