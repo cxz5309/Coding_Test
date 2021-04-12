@@ -41,4 +41,4 @@ function solution(input1, input2){
 }
 
 
-console.log(solution(wordSplit[0], wordSplit[1]));
+console.log(solution(wordSplit[0], wordSplit[1]).join("\n"));
