@@ -1,8 +1,9 @@
 const fs = require('fs');
 const stdin = (process.platform === 'linux'
     ? fs.readFileSync('/dev/stdin').toString()
-    : `3 1 1
-2 3`
+    : `3 2 1
+1 3
+2 1`
 ).split('\n');
  
 

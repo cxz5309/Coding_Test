@@ -32,6 +32,7 @@ function merge(left, right) {
     let answer = [];
     let l = 0;
     let r = 0;
+    
     while (left.length > l && right.length > r) {
         if(left[l] <= right[r]){
             answer.push(left[l]);
@@ -51,16 +52,21 @@ function merge(left, right) {
     return answer;
 }
 
+//병합정렬
 function mergeSort(arr) {
+    //배열길
     const len = arr.length;
 
+    //탈출조건
     if (len <= 1){
         return arr;
     }
     const mid = Math.floor(len / 2);
 
+    //앞 배열과 뒷 배열을 나눈다
     const left = arr.slice(0, mid);
     const right = arr.slice(mid);
+
     return merge(mergeSort(left), mergeSort(right));
 }
 
