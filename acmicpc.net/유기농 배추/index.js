@@ -44,6 +44,7 @@ for(let i=0; i<testCase; i++){
     height = Number(tmpArr[1]);
     count = Number(tmpArr[2]);
 
+    //맵, 방문한 맵 이차원배열
     map =  Array.from(Array(width), () => Array(height).fill(0));
     visited =  Array.from(Array(width), () => Array(height).fill(0));
 
@@ -57,9 +58,6 @@ for(let i=0; i<testCase; i++){
     console.log(solution());
 }
 
-
-//--------------------------------------------------------
-
 //BFS
 function BFS(map, startX, startY){
     let nextX;
@@ -72,6 +70,8 @@ function BFS(map, startX, startY){
         for(var i = 0; i < 4; i++){
             nextX = current[0] + moveX[i];
             nextY = current[1] + moveY[i];
+
+            //큐에 삽입 제외 조건
             if(!range(nextX, nextY))
                 continue;
 
