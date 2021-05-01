@@ -1,33 +1,37 @@
 const fs = require('fs');
 const stdin = (process.platform === 'linux'
     ? fs.readFileSync('/dev/stdin').toString()
-    : `5 5`
+    : `
+6 4
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 1`
 ).split('\n');
  
+/*case 't'
+'1 1'
+...*/
 
-//case '1 1'
+var horizontal;
+var vertical;
+var lineSplit = [];
 
-const input = (() => {
-    let line = 0;
-    return () => stdin[line++];
-})();
- 
-const lineSplit = input();
-const wordSplit = lineSplit.split(' ').map(Number);
+lineSplit = stdin[0];
+vertical = Number(lineSplit[0]);
+horizontal = Number(lineSplit[1]);
+stdin.shift();
+stdin.shift();
 
-// /*case 't'
-// '1 1'
-// ...*/
+var map = Array.from(Array(horizontal), () => new Array(vertical).fill(0));
 
-// var testCase;
-// var lineSplit = [];
 
-// testCase = stdin[0];
-// stdin.shift();
-
-// for(let i=0; i<testCase; i++){
-//     lineSplit.push(stdin[i]);
-// }
+for(let i=0; i<vertical; i++){
+    lineSplit = stdin[0];
+    for(let j = 0;j<horizontal;j++){
+        
+    }
+}
 
 
 //--------------------------------------------------------
