@@ -40,6 +40,46 @@ console.log(map);
 
 //--------------------------------------------------------
 
+//BFS
+function BFS(map, startX, startY){
+    let nextX;
+    let nextY;
+    unVisitQ = [];
+    unVisitQ.push([startX, startY, count]);
+
+    
+    while (unVisitQ.length > 0) {
+        const current = unVisitQ.shift();
+        current.count++;
+
+        for(var i = 0; i < 4; i++){
+            nextX = current[0] + moveX[i];
+            nextY = current[1] + moveY[i];
+
+            //큐에 삽입 제외 조건
+            if(!range(nextX, nextY))
+                continue;
+
+            if(map[nextX][nextY] == 0)
+                continue;
+
+            if(visited[nextX][nextY] == 1)
+                continue;
+            
+            visited[nextX][nextY] = 1;
+            unVisitQ.push([nextX, nextY])
+        }
+    }
+    return visited;
+}
+
+function range(x, y){
+    if (x<0||y<0||x>=width||y>=height){
+        return false;
+    }
+    return true;
+}
+
 function solution(input1, input2){
    let answer = [];
    return answer;
