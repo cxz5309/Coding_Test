@@ -24,7 +24,7 @@ console.log(horizontal);
 stdin.shift();
 
 var map = Array.from(Array(horizontal), () => new Array(vertical).fill(0));
-
+var visited = [];
 
 for(let i=0; i<horizontal; i++){
     lineSplit = stdin[0].split(' ');
@@ -47,11 +47,14 @@ function BFS(map, startX, startY){
     unVisitQ = [];
     unVisitQ.push([startX, startY, count]);
 
-    
+    let retu = 0;
     while (unVisitQ.length > 0) {
         const current = unVisitQ.shift();
         current.count++;
 
+        if(retu<current.count){
+            retu = current.count;
+        }
         for(var i = 0; i < 4; i++){
             nextX = current[0] + moveX[i];
             nextY = current[1] + moveY[i];
@@ -60,7 +63,7 @@ function BFS(map, startX, startY){
             if(!range(nextX, nextY))
                 continue;
 
-            if(map[nextX][nextY] == 0)
+            if(map[nextX][nextY] == -1)
                 continue;
 
             if(visited[nextX][nextY] == 1)
@@ -70,7 +73,7 @@ function BFS(map, startX, startY){
             unVisitQ.push([nextX, nextY])
         }
     }
-    return visited;
+    return retu;
 }
 
 function range(x, y){
@@ -80,9 +83,16 @@ function range(x, y){
     return true;
 }
 
-function solution(input1, input2){
-   let answer = [];
+function solution(map){
+   let answer;
+   for(let i = 0;i<horizontal;i++){
+       for(let j = 0; j<vertical; j++){
+           if(map[i][j] != -1 && visited[i][j] != 1){
+               BFS(map, i, j);
+           }
+       }
+   }
    return answer;
 }
 
-//console.log(solution(wordSplit[0], wordSplit[1]).join("\n"));
+console.log(solution(map));
