@@ -12,6 +12,45 @@ const stdin = (process.platform === 'linux' ?
 const moveX = [0, 1, 0, -1];
 const moveY = [1, 0, -1, 0];
 
+class Queue {
+    constructor() {
+      this.storage = {};
+      this.front = 0;
+      this.rear = 0;
+    }
+    size() {
+      if (this.storage[this.rear] === undefined) {
+        return 0;
+      } else {
+        return this.rear - this.front + 1
+      }
+    }
+    enqueue(element) {
+      if (this.size() === 0) {
+        this.storage['0'] = element;
+      } else {
+        this.rear += 1;
+        this.storage[this.rear] = element;
+      }
+    }
+    dequeue() {
+      let temp;
+      if (this.front === this.rear) {
+        temp = this.storage[this.front];
+        delete this.storage[this.front];
+        this.front = 0;
+        this.rear = 0;
+        return temp;
+      } else {
+        temp = this.storage[this.front];
+        delete this.storage[this.front];
+        this.front += 1;
+        return temp;
+      }
+    }
+  }
+
+
 var height;
 var width;
 var lineSplit = [];
@@ -27,7 +66,7 @@ shift++;
 
 var map = Array.from(Array(height), () => new Array(width));
 var visited = Array.from(Array(height), () => new Array(width));
-unVisitQ = [];
+unVisitQ = new Queue();
 let tmpNum;
 
 for (let i = 0; i < height; i++) {
@@ -39,7 +78,7 @@ for (let i = 0; i < height; i++) {
         visited[i][j] = tmpNum == -1 ? 1 : 0;
 
         if (tmpNum >= 1) {
-            unVisitQ.push([j, i, 0]);
+            unVisitQ.enqueue([j, i, 0]);
         }
     }
     shift++;
@@ -55,10 +94,10 @@ function BFS(map) {
     let current;
     let retu = 0;
 
-    while (unVisitQ.length > 0) {
+    while (unVisitQ.size() > 0) {
         //망할 js shift 속도가 queue 구현한것보다 325배 느리단다..
         //그럼 큐를 만들어놓던가..
-        current = unVisitQ.shift();
+        current = unVisitQ.dequeue();
         visited[current[1]][current[0]] = 1;
         // console.log('현재위치 ' + current[0], ', ' + current[1]);
         // console.log('현재수 ' + current[2]);
@@ -75,7 +114,7 @@ function BFS(map) {
                 continue;
 
             visited[nextY][nextX] = 1;
-            unVisitQ.push([nextX, nextY, nextCount])
+            unVisitQ.enqueue([nextX, nextY, nextCount])
         }
     }
     return retu;
