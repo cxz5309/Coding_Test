@@ -59,7 +59,6 @@ function binery_search(arr, des){
     left = arr.slice(0, middle);
     right = arr.slice(middle, len);
 
-    while(l<middle)
     if(binery_search(left, des)){
         return true;
     }
