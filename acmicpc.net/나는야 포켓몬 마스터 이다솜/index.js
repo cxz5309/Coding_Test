@@ -36,9 +36,6 @@ Kakuna`
 ).split('\n');
  
 
-// /*case 't'
-// '1 1'
-// ...*/
 let answer = [];
 
 var pokeNum;
@@ -62,7 +59,7 @@ for(let i=1; i<=pokeNum; i++){
     });
     shiftIdx++;
 }
-//console.log(pokeIdx);
+console.log(pokeIdx);
 
 let test = [];
 for(let i = 0;i<testCase;i++){
