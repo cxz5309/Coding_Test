@@ -1,7 +1,7 @@
 const fs = require('fs');
 const stdin = (process.platform === 'linux'
     ? fs.readFileSync('/dev/stdin').toString()
-    : `2 3 1`
+    : `4 7 7`
 ).split('\n');
  
 
@@ -23,44 +23,57 @@ let init = [[0, 1], [2, 3]];
 //--------------------------------------------------------
 
 let size = Math.pow(2, n);
-let arr = Array.from(Array(size), () => new Array(size).fill(null));
+let arr = Array.from(Array(size), () => new Array(size));
 
-function multiple2Arr(mul){
-    return init.map((y) => {
-        return y.map((x) =>{
-            return x * mul;
-        });
-    });
+for(var i = 0;i<2;i++){
+    for(var j = 0;j < 2;j++){
+        arr[i][j] = init[i][j];
+    }
 }
 
 //console.log(init);
+let matrix, prevMatrix, adder;
 
-function logic(arr, init, n, x){
-    let matrix = Math.pow(2, (x));
+function logic(arr, x){
+    matrix = Math.pow(2, (x));
+    prevMatrix = Math.pow(2, (x-1));
+    adder = prevMatrix * prevMatrix;
+    
+    // console.log(matrix);
+    // console.log(prevMatrix);
+    // console.log(adder);
+    
     for(var i=0;i<matrix;i++){
         for(var j=0;j<matrix;j++){
-            if(arr[j][i] == null){
-                arr[j][i] = init[j%2][i%2] + Math.pow(2, (x));
+            if(!arr[j][i]){
+                arr[j][i] = arr[j%prevMatrix][i%prevMatrix] + (adder * init[Math.floor(j/prevMatrix)][Math.floor(i/prevMatrix)]) ;
             }
         }
     }
-    init = arr.slice();
-    console.log(arr);
-    x++;
 
-    if(n<x){
-        return;
+    // for(var i=0;i<size;i++){
+    //     console.log(arr[i] + " ")
+    // }    
+
+    if(arr[r][c]){
+        return arr[r][c];
     }
-    logic(arr, init, n, x);
+
+    if(n === x){
+        return 0;
+    }
+    
+    return logic(arr, ++x);
 }
 
-logic(arr, init, n, 1);
 //console.log(arr);
 
-function solution(input1, input2){
-   let answer = [];
+function solution(){
+   let answer;
+   
+   answer = logic(arr, 1);
    return answer;
 }
 
 
-//console.log(solution(wordSplit[0], wordSplit[1]).join("\n"));
+console.log(solution());
