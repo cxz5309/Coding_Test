@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <iostream>
 
-#define MAX_SIZE 10000
+#define MAX_SIZE 100001
 
 using namespace std;
 
@@ -30,7 +30,7 @@ void push(priorityQueue* pq, int data) {
 }
 
 int pop(priorityQueue* pq) {
-    if (pq->count <= 0) return -9999;
+    if (pq->count <= 0) return 0;
     int res = pq->heap[0];
     pq->count--;
     pq->heap[0] = pq->heap[pq->count];
@@ -60,11 +60,10 @@ int main(void) {
     pq.count = 0;
     for (int i = 0; i < n; i++) {
         cin>>data;
+        if (data == 0) {
+            cout << pop(&pq);
+        }
         push(&pq, data);
-    }
-    for (int i = 0; i < n; i++) {
-        int data = pop(&pq);
-        printf("%d ", data);
     }
 
     return 0;
