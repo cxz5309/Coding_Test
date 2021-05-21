@@ -1,15 +1,16 @@
 const fs = require('fs');
 const stdin = (process.platform === 'linux'
     ? fs.readFileSync('/dev/stdin').toString()
-    : `13
+    : `14
 0
 1
 2
-0
-0
+6
+4
 3
-2
-1
+0
+7
+0
 0
 0
 0
@@ -38,12 +39,12 @@ class priorityQueue{
     count = 0;
 
     push_pq(num){
-        console.log(this.heap);
+        //console.log(this.heap);
         this.heap.push(num);//맨 마지막(heap[count])에 넣기
 
         if(this.heap[this.count !== num]){
-            console.log("오류");
             return;
+            //console.log("오류");
         }
 
         let now = this.count;
@@ -53,25 +54,24 @@ class priorityQueue{
         if(now == 0){
             return;
         }
-        var ten = 0;
         while(this.heap[now] > this.heap[parent])//부모가 현재 들어온것보다 큰 상태(정상) 까지 올린다
         {
-            console.log("push---------------")
-            console.log("now" + now);
-            console.log("now" + this.heap[now]);
-            console.log("parent" + parent);
-            console.log("parent" + this.heap[parent]);
-            console.log("count" + this.count);
-            console.log("---------------")
-            if(ten++ == 10){
-                return;
-            }
+            // console.log("push---------------")
+            // console.log("now" + now);
+            // console.log("now" + this.heap[now]);
+            // console.log("parent" + parent);
+            // console.log("parent" + this.heap[parent]);
+            // console.log("count" + this.count);
+            // console.log("---------------");
             [this.heap[now] , this.heap[parent]] = [this.heap[parent], this.heap[now]];
+            
+            now = parent;
+            parent = Math.floor((now - 1)/2);
         }
     }
 
     pop_pq(){
-        console.log(this.heap);
+        //console.log(this.heap);
         if(this.count == 0){
             return 0;
         }
@@ -80,25 +80,26 @@ class priorityQueue{
         let now = 0;
         let left = 1;
         let right = 2;
+
         let priority = this.heap[now];
+        let minority =  this.heap.pop();
+        if(priority == minority){
+            return priority;
+        }
+        
+        this.heap[now] = minority;
 
-        this.heap[now] = this.heap.pop();
         let target = now;
-
-        var ten = 0;
 
         //맨 뒤 아이템을 맨 위로 올리고 정상 상태까지 내린다
         while(left < this.count){
-            console.log("pop---------------")
-            console.log("now" + now);
-            console.log("now" + heap[now]);
-            console.log("target" + target);
-            console.log("target" + heap[target]);
-            console.log("count" + this.count);
-            console.log("---------------")
-            if(ten++ == 10){
-                return 999;
-            }
+            // console.log("pop---------------")
+            // console.log("now" + now);
+            // console.log("now" + this.heap[now]);
+            // console.log("target" + target);
+            // console.log("target" + this.heap[target]);
+            // console.log("count" + this.count);
+            // console.log("---------------")
 
             if(this.heap[target]<this.heap[left]) target = left;
             if(this.heap[target]<this.heap[right] && right<this.count) target = right;
@@ -119,14 +120,13 @@ function solution(){
     pq = new priorityQueue();
     pq.count = 0;
     for(var i = 0; i < testCase; i++){
-        console.log(query[i] + "~~~~~~~~~~~`");
+        //console.log(query[i] + "~~~~~~~~~~~`");
         if(query[i] === 0){
-            var a = pq.pop_pq();
-            console.log(a);
-            answer.push(a);
+            answer.push(pq.pop_pq());
             continue;
         }
         pq.push_pq(query[i]);
+        //console.log(pq.heap);
     }
 
     return answer;
