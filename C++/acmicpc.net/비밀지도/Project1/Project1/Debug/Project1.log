@@ -1,0 +1,4 @@
+﻿  소스.cpp
+C:\Users\cxz53\OneDrive\바탕 화면\tutorial\nodejs\Coding_Test\C++\acmicpc.net\비밀지도\Project1\Project1\소스.cpp(26,35): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\cxz53\OneDrive\바탕 화면\tutorial\nodejs\Coding_Test\C++\acmicpc.net\비밀지도\Project1\Project1\소스.cpp(21,9): warning C4101: 'bitLen' :참조되지 않은 지역 변수입니다.
+  Project1.vcxproj -> C:\Users\cxz53\OneDrive\바탕 화면\tutorial\nodejs\Coding_Test\C++\acmicpc.net\비밀지도\Project1\Debug\Project1.exe
