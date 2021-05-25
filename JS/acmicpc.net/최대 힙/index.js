@@ -42,7 +42,7 @@ class priorityQueue{
         //console.log(this.heap);
         this.heap.push(num);//맨 마지막(heap[count])에 넣기
 
-        if(this.heap[this.count !== num]){
+        if(this.heap[this.count] !== num){
             return;
             //console.log("오류");
         }
@@ -56,13 +56,6 @@ class priorityQueue{
         }
         while(this.heap[now] > this.heap[parent])//부모가 현재 들어온것보다 큰 상태(정상) 까지 올린다
         {
-            // console.log("push---------------")
-            // console.log("now" + now);
-            // console.log("now" + this.heap[now]);
-            // console.log("parent" + parent);
-            // console.log("parent" + this.heap[parent]);
-            // console.log("count" + this.count);
-            // console.log("---------------");
             [this.heap[now] , this.heap[parent]] = [this.heap[parent], this.heap[now]];
             
             now = parent;
@@ -93,13 +86,6 @@ class priorityQueue{
 
         //맨 뒤 아이템을 맨 위로 올리고 정상 상태까지 내린다
         while(left < this.count){
-            // console.log("pop---------------")
-            // console.log("now" + now);
-            // console.log("now" + this.heap[now]);
-            // console.log("target" + target);
-            // console.log("target" + this.heap[target]);
-            // console.log("count" + this.count);
-            // console.log("---------------")
 
             if(this.heap[target]<this.heap[left]) target = left;
             if(this.heap[target]<this.heap[right] && right<this.count) target = right;

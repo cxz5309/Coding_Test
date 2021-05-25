@@ -16,7 +16,6 @@ var computers;
 var linkCount;
 var linkSplit;
 var links = {};
-var linksR = {};
 
 computers = Number(stdin[0]);
 stdin.shift();
@@ -46,7 +45,7 @@ for(let i=0; i<linkCount; i++){
     stdin.shift();
 }
 
-// console.log(links);
+ console.log(links);
 // console.log(linksR);
 
 //--------------------------------------------------------

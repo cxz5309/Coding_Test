@@ -30,21 +30,16 @@ let allWay = 0;
 
 //DFS
 function DFS(n, count){
-    //console.log(count);
-    //console.log("depth");
     if(count > n){
         return;
     }
     if(count === n){
-        //console.log("check");
         allWay++;
         return;
     }
 
     for(var i=0;i<3;i++){
-        //console.log("count++");
         DFS(n, count + elementNum[i]);
-        //console.log("clear");
     }
 }
 
