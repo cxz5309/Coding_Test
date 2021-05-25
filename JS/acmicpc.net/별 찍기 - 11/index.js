@@ -1,7 +1,7 @@
 const fs = require('fs');
 const stdin = (process.platform === 'linux'
     ? fs.readFileSync('/dev/stdin').toString()
-    : `3`
+    : `24`
 ).split('\n');
  
 
@@ -14,59 +14,36 @@ initShape = ["  *  ", " * * ", "*****"];
 
 //--------------------------------------------------------
 
-function makeOuterSpace(N, I){
-    let star = "";
-    for(let i=0;i<N - I;i++){
-        star += " ";
-    }
-    return star;
-}
-
-function makeInitShape(n){
-    //n은 3의 배수
-    star = "";
-    for(var i=0;i<n;i++){
-        a = n - i;
-        star += makeOuterSpace(n, i);
-        for(var j = 0;j < 2*i + 1;j++){
-            star += "*";
-        }
-        star += makeOuterSpace(n, i);
-        star+="\n";
-    }
-    return star;
-}
-
 function makeStar(i, init){
-    if(N-i == 0){
-        console.log(init);
+    prev = i;
+    now = i === 0 ? i + 3 : i * 2;
+
+    if(N-now == 0){
         return init;
     }
 
-
     let newInit = [];
     let space = ""; 
-    for(let j = 0; j < i; j++){
+    for(let j = 0; j < now; j++){
         space += " ";
     }
 
-    
-    i = i === 0 ? i + 3 : i * 2;
-    for(let j = 0; j<i; j++){
-        newInit.push(space + init[j]);
+    for(let j = 0; j<now; j++){
+        newInit.push(space + init[j] + space);
     }
 
-    makeStar(i, newInit);
+    for(let j = 0; j<now; j++){
+        newInit.push(init[j] + " " + init[j]);
+    }
+
+    return makeStar(now, newInit);
 }
-
-
-console.log(makeStar(0, initShape))
 
 function solution(){
    let answer = [];
-   makeStar();
+   answer = makeStar(0, initShape);
    return answer;
 }
 
 
-//console.log(solution(wordSplit[0], wordSplit[1]).join("\n"));
+console.log(solution().join("\n"));
