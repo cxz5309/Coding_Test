@@ -36,8 +36,8 @@ let a = wordSplit[0];
 let b = wordSplit[1];
 
 function solution(input1, input2){
-   let answer = [];
-   return answer;
+    let answer = [];
+    return answer;
 }
 
 
