@@ -1,7 +1,7 @@
 const fs = require('fs');
 const stdin = (process.platform === 'linux'
     ? fs.readFileSync('/dev/stdin').toString()
-    : `100000 0
+    : `5 17
     `
 ).split('\n');
  
@@ -32,7 +32,7 @@ function BFS(start){
     while (unVisitQ.length > 0) {
         const current = unVisitQ.shift();
         
-        //console.log(current[0] + " " + current[1]);
+        console.log(current[0] + " " + current[1]);
 
         if(current[0] === K){
             return current[1];
