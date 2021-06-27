@@ -6,7 +6,7 @@ var computers = [[1, 1, 0], [1, 1, 0], [0, 0, 1]];
 let visited = [];
 
 function DFS(prevNum, nowNum, link){
-    //console.log(prevNum + "->" + nowNum);
+    console.log(prevNum + "->" + nowNum);
     if(prevNum !== -1){
         visited.push(nowNum);
     }
