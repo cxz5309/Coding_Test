@@ -1,35 +1,35 @@
-let s = 'baabaa';
+let s = 'cdcd';
 
-let makeRegex = function(){
-    let alph = [];
-    let i = "a".charCodeAt(0);
-    let j = "z".charCodeAt(0);
-    for (; i <= j; ++i) {
-        let aa =  String.fromCharCode(i) + String.fromCharCode(i);
-        alph.push(aa);
-    }
-    return alph.join('|');
-}
+// let makeRegex = function(){
+//     let alph = [];
+//     let i = "a".charCodeAt(0);
+//     let j = "z".charCodeAt(0);
+//     for (; i <= j; ++i) {
+//         let aa =  String.fromCharCode(i) + String.fromCharCode(i);
+//         alph.push(aa);
+//     }
+//     return alph.join('|');
+// }
 
 function solution() {
-    let answer = [];
+    var answer = -1;
 
-    let regex = new RegExp( makeRegex(), 'g');
-    console.log(regex);
-    while(s.length>0)
-    {
-        console.log(s);
-        if(!s.search(regex)){
-            console.log(0);
-            break;
+    let stack = [];
+    for(let i = 0;i<s.length;i++){
+        stack.push(s.charAt(i));
+        // console.log(s.charAt(i));
+        if(stack.length>=2){
+            //마지막 2개 아이템이 같을 경우 pop
+            if(stack[stack.length-1] === stack[stack.length-2])
+            {
+                // console.log(stack[stack.length-1]);
+                // console.log(stack[stack.length-2]);
+                stack.pop();
+                stack.pop();
+            }
         }
-        else{
-            console.log(1);
-        }
-        s = s.replace(regex, "");
-        console.log(s);
     }
-    console.log(s);
+    answer = stack.length>0 ? 0 : 1;
     return answer;
 }
 

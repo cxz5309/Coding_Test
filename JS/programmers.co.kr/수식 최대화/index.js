@@ -53,8 +53,11 @@ function makeOpPriority(opNum, ops){
 function solution() {
     var answer = 0;
     const expressionSplit = expression.split(/(\*|\-|\+)/)
-    const op = makeMap(expressionSplit);    
+    //현재 연산자 [연산자가 들어간 개수, [각각 연산자의 위치 idx]]
+    const op = makeMap(expressionSplit);
+    //console.log(op);
     const opPriority = makeOpPriority(op.size, [...op.keys()]);
+    //console.log(opPriority);
     
     let maximum = 0;
     //생성된 우선순위 조합의 개수만큼
@@ -62,7 +65,8 @@ function solution() {
         //구간배열 임시 구간에 복사  
         let tmpExSplit = expressionSplit.slice();
         for(let j=0; j<opPriority[i].length; j++){
-            //현재 연산자 [연산자가 들어간 개수, [각각 연산자의 위치 idx]]
+            //console.log(tmpExSplit.join(""));
+            //nowOp = 현재 우선으로 처리할 연산자 정보
             const nowOp = op.get(opPriority[i][j]);
             //console.log(nowOp);
             for(let k=0; k<nowOp[0]; k++){
@@ -87,6 +91,7 @@ function solution() {
                 
                 let exString = tmpExSplit[itor + tmpNe] + tmpExSplit[itor] + tmpExSplit[itor + tmpPo];
                 //console.log(exString);
+                //String 수식 -> 실제 연산
                 resultNum = eval(exString);
                 //console.log(resultNum);
 
