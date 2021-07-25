@@ -1,12 +1,12 @@
-package sol20;
+package sol21;
 
 import sol18.Point;
 import sol19.Shape;
 
-public class Triangle extends Shape{
+public class Rectangle extends Shape{
     int xSave, ySave;
 
-    public Triangle(Point point) {
+    public Rectangle(Point point) {
         super(point);
     }
 
@@ -38,7 +38,7 @@ public class Triangle extends Shape{
 
     @Override
     public double getArea() {
-        return getPoint().x * getPoint().y/2;
+        return getPoint().x * getPoint().y;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Triangle extends Shape{
 
     @Override
     public String toString() {
-        return "Triangle{" +
+        return "Rectangle{" +
                 "point=" + point +
                 ", xSave=" + xSave +
                 ", ySave=" + ySave +
