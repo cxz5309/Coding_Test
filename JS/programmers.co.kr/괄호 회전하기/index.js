@@ -1,59 +1,61 @@
-const s = "[](){}";
+const s = "[{(()())((()))}]"
 let stack = [];
 
-const correct = (a, b)=>{
-    switch(a){
-        case '[':
-            if(b===']') return true;
-            break;
-        case '{':
-            if(b==='}') return true;
-            break;
-        case '(':
-            if(b===')') return true;
-            break;
-    }
-    return false;
-}
 
-const pass = (a, b)=>{
+const match = (a, b)=>{
+    let result = (b === '{' ||  b === '(' ||  b === '[') 
+        ? 'false' 
+        : 'break';
     switch(a){
-        case '[':
-            if(b===']') return true;
+        case '{': if(b === '}') result = 'true';
             break;
-        case '{':
-            if(b==='}') return true;
+        case '[': if(b === ']') result = 'true';
             break;
-        case '(':
-            if(b===')') return true;
+        case '(': if(b === ')') result = 'true';
             break;
     }
-    return false;
+    return result;
 }
 
 const logic = function(s){
-    let cnt = 0;
-    if(correct(s.charAt(0), s.charAt(s.length-1))){
-        cnt++;
-    }
+    let max = 0;
 
-    for(let i=0; i<s.length; i++){
-        if(stack.length === 0){
-            stack.push(s.charAt(i));
-            continue;
-        }
-        console.log(stack[stack.length-1]);
-        console.log(s.charAt(i));
-        if(correct(stack[stack.length-1], s.charAt(i))){
-            stack.pop();
-            cnt++;
+    for(let i = 0;i<s.length;i++){
+        const sliceFirst = s.slice(0, i);
+        const sliceNext = s.slice(i);
+        const newS = sliceNext + sliceFirst;
+        max = Math.max(max, f(newS));
+    }
+    return max;
+}
+
+const f = function (newS){
+    let cnt = 0;
+
+    for(let idx = 0;idx<newS.length;idx++){
+        const char = newS.charAt(idx);
+
+        // console.log('f');   
+        // console.log(stack);
+        if(stack.length>0){
+            const matchResult = match(stack[stack.length-1], char);
+
+            if(matchResult === 'true') stack.pop();
+            else if(matchResult === 'false') stack.push(char);
+            else return 0;
         }
         else{
-            return -1;
+            if(char === ')' ||char === ']' ||char === '}')
+                return 0;
+            stack.push(char);
         }
+        // console.log('l');
+        // console.log(stack);
+        if(stack.length===0) cnt++;
     }
     return cnt;
 }
+
 
 function solution() {
     var answer = -1;
