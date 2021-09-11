@@ -1,7 +1,7 @@
 const fs = require('fs');
 const stdin = (process.platform === 'linux'
-    ? fs.readFileSync('/dev/stdin').toString()
-    : `4
+? fs.readFileSync('/dev/stdin').toString()
+: `4
 14 9 12 10
 1 11 5 4
 7 15 2 13
