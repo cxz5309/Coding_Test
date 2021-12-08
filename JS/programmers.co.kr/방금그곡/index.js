@@ -1,87 +1,77 @@
-const KEY = {
-    'C':'A',
-    'C#':'B',
-    'D':'C',
-    'D#':'D',
-    'E':'E',
-    'F':'F',
-    'F#':'G',
-    'G':'H',
-    'G#':'I',
-    'A':'G',
-    'A#':'k',
-    'B':'L'
+const m = "CC#BCC#BCC#BCC#B"
+const musicinfos = ["03:00,03:30,FOO,CC#B", "04:00,04:08,BAR,CC#BCC#BCC#B"]
+
+const to = {
+  'C': 'a',
+  'C#': 'b',
+  'D': 'c',
+  'D#': 'd',
+  'E': 'e',
+  'F': 'f',
+  'F#': 'g',
+  'G': 'h',
+  'G#': 'i',
+  'A': 'j',
+  'A#': 'k',
+  'B': 'l'
+}
+
+const parseNewMusic = (str) => {
+  let parseMusic = '';
+  for (let i = 0; i < str.length; i++) {
+    if (i < str.length - 1 && str[i + 1] === '#') {
+      parseMusic += to[str[i] + '#'];
+      i++;
+    } else {
+      parseMusic += to[str[i]];
+    }
+  }
+  return parseMusic;
 }
 
 function solution(m, musicinfos) {
-    let answerList = [];
-    let answer = '';
-    let arr = [];
-    let newM = [];
-    // m을 새로운 문자열로 변환
-    for (let i=0; i<m.length; i++){
-        if(i<m.length-1 && m[i+1] === '#'){
-            newM += KEY[m[i]+'#'];
-            i++;
-        }else{
-           newM += KEY[m[i]];
-        }
+  let answer = '';
+  let parsedM = parseNewMusic(m);
+
+  const arr = musicinfos.map((val) => {
+    const musicinfoSplit = val.split(',');
+    const startTime = musicinfoSplit[0];
+    const endTime = musicinfoSplit[1];
+    const title = musicinfoSplit[2];
+    const parsedMusic = parseNewMusic(musicinfoSplit[3]);
+
+    const time = ((endTime.split(':')[0] * 60) + (endTime.split(':')[1]) * 1)
+      - ((startTime.split(':')[0] * 60) + (startTime.split(':')[1] * 1));
+
+    let melody = '';
+    const times = Math.floor(time / parsedMusic.length) + 1;
+
+    for (let i = 0; i < times; i++) {
+      melody += parsedMusic;
     }
-    // musicinfos를 title, content 속성을 가진 객체의 배열로 변환한다.
-    for (let i=0; i<musicinfos.length;i++){
-        musicinfos[i] = musicinfos[i].split(',');
-        // 총 몇분 재생했는 지 계산
-        let time =0;
-        let h1 = parseInt(musicinfos[i][0].split(':')[0]);
-        let m1 = parseInt(musicinfos[i][0].split(':')[1]);
-        let h2 = parseInt(musicinfos[i][1].split(':')[0]);
-        let m2 = parseInt(musicinfos[i][1].split(':')[1]);
-        if (m2>m1){
-            time = 60*(h2-h1) + m2-m1;
-        }else{
-            time = 60*(h2-h1-1) + 60+m2-m1;
-        }
-        let totalContent = '';
-        let musicContent = '';
-        let str = musicinfos[i][3];
-        // 노래의 음을 새로운 문자열로 변환
-        for (let j=0; j<str.length; j++){
-            if (j<str.length-1 && str[j+1]==='#'){
-                musicContent += KEY[str[j]+'#'];
-                j++;
-            }else{
-                musicContent += KEY[str[j]];
-                
-            }
-        }
-        // 재생된 음을 문자열로 생성
-        for (let i=0; i<time; i++){
-            totalContent += musicContent[i%musicContent.length];
-        }
-        arr.push({time:time, title:musicinfos[i][2],content:totalContent});
+    melody = melody.slice(0, time);
+
+    return { time, title, melody };
+  });
+
+  let answerList = arr.filter((val) => {
+    return val.melody.includes(parsedM)
+  })
+
+  if (answerList.length === 0) {
+    return '(None)';
+  }
+  answerList.sort((a, b) => {
+    if (a.time > b.time) {
+      return -1;
+    } else if (a.time < b.time) {
+      return 1;
+    } else {
+      return 0;
     }
-    // newM을 포함한 문자열을 찾기
-    for (let i=0; i<arr.length; i++){
-        let content = arr[i].content;
-        if(content.includes(newM)){
-            answerList.push(arr[i]);
-        }
-    }
-    // 없으면 이렇게 반환
-    if(answerList.length===0){
-        return "(None)";
-    }
-    // 있으면 time 순으로 정렬
-    answerList.sort((a,b)=>{
-        if (a.time>b.time){
-            return -1;
-        }else if (a.time <b.time){
-            return 1;
-        }else{
-            return 0;
-        }
-    })
-    // 첫 번째의 제목 반환
-    answer = answerList[0].title;
-    return answer;
+  })
+  answer = answerList[0].title;
+  return answer;
 }
+
+console.log(solution(m, musicinfos))
